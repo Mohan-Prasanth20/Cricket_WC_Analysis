@@ -1,0 +1,58 @@
+SELECT * FROM `master-balm-423013-k3.My_database.cricket_wc` LIMIT 10
+
+// overall record
+
+SELECT Result,count(*) from `master-balm-423013-k3.My_database.cricket_wc`
+group by Result
+
+SELECT Opposition,Result FROM `master-balm-423013-k3.My_database.cricket_wc` where Result ='lost'
+
+//head to head vs teams
+
+SELECT Opposition,Result,count(*) from `master-balm-423013-k3.My_database.cricket_wc`
+group by Opposition,Result
+order by Opposition
+
+
+//records in knockout games
+
+SELECT year,stage,Opposition from `master-balm-423013-k3.My_database.cricket_wc`
+where stage in('Final','Semis')
+
+
+//bat first vs chase record
+
+SELECT Inns,Result,count(Result) from  `master-balm-423013-k3.My_database.cricket_wc`
+group by Inns,Result
+order by Inns
+
+
+//160+ batting first what has happened
+
+SELECT Inns,Result,count(*) from  `master-balm-423013-k3.My_database.cricket_wc`
+where Inns =1 and score_real >160
+group by Result,Inns
+
+SELECT * from  `master-balm-423013-k3.My_database.cricket_wc`
+where Inns =1 and score_real >160 
+
+SELECT * from  `master-balm-423013-k3.My_database.cricket_wc`
+where Inns =1 and score_real >160 and Result ='lost'
+
+
+//margin of victory above 50 runs?
+
+SELECT *,
+left(margin,strpos(margin,"runs")-1)
+from `master-balm-423013-k3.My_database.cricket_wc`
+where Inns=1  and result='won'
+and cast(left(margin,strpos(margin,"runs")-1) as numeric)>50
+
+
+//biggest win terms of balls remaining
+
+SELECT * from `master-balm-423013-k3.My_database.cricket_wc`
+where Inns =2 and Result ='won'
+order by BR desc
+
+
